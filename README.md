@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="726" alt="image" src="https://github.com/BuzzVerse/lora_cloud/assets/19632192/f8764074-3613-497b-b8a7-68bacd0e89ec">
+</p>
+
 
 ## How to deploy
 1. Generate password for mosquitto broker
