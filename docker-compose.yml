@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: always
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto.passwd:/mosquitto/config/mosquitto.passwd
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    restart: always
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+      - influxdb-config:/etc/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=zaq1@WSX
+      - DOCKER_INFLUXDB_INIT_ORG=bUZzverse
+      - DOCKER_INFLUXDB_INIT_BUCKET=lora_db
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=gwTFtAnBRUM3OYmwsZ0GTg2C6r63bZ1G
+
+  telegraf:
+    image: telegraf
+    container_name: telegraf
+    restart: always
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - mosquitto
+      - influxdb
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana-provisioning:/etc/grafana/provisioning
+      - grafana-data:/var/lib/grafana
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+    depends_on:
+      - influxdb
+
+volumes:
+  grafana-data:
+  influxdb-data:
+  influxdb-config:
