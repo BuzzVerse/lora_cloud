@@ -14,7 +14,7 @@ mosquitto_passwd -c mosquitto.passwd admin
 ```bash
 [[inputs.mqtt_consumer]]
   username = "admin"
-  password = "qwerty"
+  password = "zaq1@WSX"
 ```
 
 3. You can change password and API token for InfluxDB in docker-compose.yml at:
@@ -47,12 +47,13 @@ docker-compose up -d
 
 ## How to send test MQTT message
 ```bash
-mosquitto_pub -u admin -P [pass_from_1_step] -t 'tele/lora/SENSOR' -m '{"humidity":21, "temperature":37, "battery_voltage_mv":3000}' -d
+mosquitto_pub -u admin -P [pass_from_1_step] -t 'tele/lora/SENSOR' -m '{"time": 1709226534260, "humidity":21, "temperature":37, "battery_voltage_mv":3000}' -d
 ```
 
 ## example influx query to display temperature in Grafana
 ```bash
 from(bucket: "lora_db")
-|> range(start: v.timeRangeStart, stop:v.timeRangeStop)
-|> filter(fn: (r) => r._field == "temperature")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r._field == "temperature" and r._measurement == "SENSOR_NAME")
+  |> last()
 ```
