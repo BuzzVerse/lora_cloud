@@ -1,9 +1,6 @@
-# 🖌️ Getting started
+# ☁️ Cloud
 
-## Welcome !
+## Grafana, InfluxDB, Mosquitto broker flow
 
-A design system is a product, and similar best practices to product docs apply when documenting a design system. Offering succinct ways to get started is a great way to introduce the concepts of your design system, while empowering folks to use it for their needs.
+<figure><img src=".gitbook/assets/288180929-f8764074-3613-497b-b8a7-68bacd0e89ec.png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
-Use this template to introduce the concept of your design system. Outlining basic principles and ways of working to get every team on the same page.
-{% endhint %}
